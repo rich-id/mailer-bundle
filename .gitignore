@@ -1,0 +1,36 @@
+# Cache and logs (Symfony3 directory structure)
+/var/*
+!var/.gitkeep
+
+# Managed by Composer
+/bin
+/vendor
+
+# PHPUnit
+/.phpunit.result.cache
+/phpunit.xml
+/phpunit-*.xml
+/phpunit-filter.php
+/.phpunit
+
+# Auto-saved files
+*~
+
+# Mac
+.DS_store
+
+# PhpStorm
+.idea
+
+# Coverage
+/coverage
+/reports
+
+# Database
+/.db
+
+# Static utilities
+.php_cs.cache
+.php-cs-fixer.cache
+cghooks.lock
+

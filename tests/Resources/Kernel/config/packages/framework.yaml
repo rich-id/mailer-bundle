@@ -1,0 +1,11 @@
+framework:
+    test: true
+    default_locale: 'fr'
+    secret: 'ThisIsASecret'
+    cache:
+        app: cache.adapter.array
+    session:
+        handler_id: session.handler.native_file
+        storage_id: session.storage.mock_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+

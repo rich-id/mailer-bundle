@@ -1,0 +1,66 @@
+{
+    "name": "rich-id/mailer-bundle",
+    "description": "Mailer bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "RichId",
+            "homepage": "https://www.rich-id.com"
+        }
+    ],
+    "support": {
+        "email": "contact@rich-id.com",
+        "source": "https://github.com/rich-id/mailer-bundle",
+        "docs": "https://github.com/rich-id/mailer-bundle/blob/master/README.md",
+        "issues": "https://github.com/rich-id/mailer-bundle/issues"
+    },
+    "require": {
+        "php": "^8.0",
+        "richcongress/bundle-toolbox": "^1.1",
+        "sensio/framework-extra-bundle": "^5.4|^6.0",
+        "symfony/event-dispatcher": "^5.4|^6.0",
+        "symfony/mailer": "^5.4|^6.0",
+        "symfony/mime": "^5.4|^6.0"
+    },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "^2.0",
+        "phpunit/phpunit": "^9.5",
+        "richcongress/static-analysis": "^0.1",
+        "richcongress/test-suite": "^0.1",
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "RichId\\MailerBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RichId\\MailerBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "discard-changes": true,
+        "sort-packages": true
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || cghooks add --ignore-lock"
+        ],
+        "post-update-cmd": [
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || cghooks update"
+        ]
+    },
+    "extra": {
+        "hooks": {
+            "pre-commit": [
+                "docker-compose exec -T application ./vendor/bin/php-cs-fixer fix ."
+            ],
+            "pre-push": [
+                "docker-compose exec -T application ./vendor/bin/php-cs-fixer fix . --dry-run",
+                "docker-compose exec -T application ./vendor/bin/static_analysis"
+            ]
+        }
+    }
+}
