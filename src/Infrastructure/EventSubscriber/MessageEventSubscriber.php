@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace RichId\MailerBundle\Infrastructure\EventSubscriber;
 
+use RichId\MailerBundle\Domain\Updater\BccEmailUpdater;
+use RichId\MailerBundle\Domain\Updater\ReturnPathEmailUpdater;
+use RichId\MailerBundle\Domain\Updater\SenderEmailUpdater;
 use RichId\MailerBundle\Domain\Updater\SubjectPrefixEmailUpdater;
 use RichId\MailerBundle\Domain\Updater\YopmailEmailUpdater;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -13,6 +16,15 @@ use Symfony\Contracts\Service\Attribute\Required;
 
 class MessageEventSubscriber implements EventSubscriberInterface
 {
+    #[Required]
+    public BccEmailUpdater $bccEmailUpdater;
+
+    #[Required]
+    public ReturnPathEmailUpdater $returnPathEmailUpdater;
+
+    #[Required]
+    public SenderEmailUpdater $senderEmailUpdater;
+
     #[Required]
     public SubjectPrefixEmailUpdater $subjectPrefixEmailUpdater;
 
@@ -27,6 +39,9 @@ class MessageEventSubscriber implements EventSubscriberInterface
             return;
         }
 
+        ($this->bccEmailUpdater)($message);
+        ($this->returnPathEmailUpdater)($message);
+        ($this->senderEmailUpdater)($message);
         ($this->subjectPrefixEmailUpdater)($message);
         ($this->yopmailEmailUpdater)($message);
     }

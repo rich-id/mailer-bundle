@@ -6,6 +6,12 @@ namespace RichId\MailerBundle\Domain\Port;
 
 interface ConfigurationInterface
 {
+    public function getSenderAddress(): string;
+    public function getSenderName(): string;
+
+    public function getBccAddress(): ?string;
+    public function getReturnPathName(): ?string;
+
     public function isYopmailEnabled(): bool;
     public function getSubjectPrefix(): ?string;
 }

@@ -14,6 +14,28 @@ class ConfigurationAdapter implements ConfigurationInterface
     #[Required]
     public ParameterBagInterface $parameterBag;
 
+    public function getSenderAddress(): string
+    {
+        return (string) $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::SENDER_ADDRESS));
+    }
+
+    public function getSenderName(): string
+    {
+        return (string) $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::SENDER_NAME));
+    }
+
+    public function getBccAddress(): ?string
+    {
+        $configuration = $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::BCC_ADDRESS));
+        return $configuration !== null ? (string) $configuration : null;
+    }
+
+    public function getReturnPathName(): ?string
+    {
+        $configuration = $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::RETURN_PATH_ADDRESS));
+        return $configuration !== null ? (string) $configuration : null;
+    }
+
     public function isYopmailEnabled(): bool
     {
         return (bool) $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::YOPMAIL_ENABLED));
@@ -22,6 +44,6 @@ class ConfigurationAdapter implements ConfigurationInterface
     public function getSubjectPrefix(): ?string
     {
         $configuration = $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::SUBJECT_PREFIX));
-        return ($configuration !== null) ? (string) $configuration : null;
+        return $configuration !== null ? (string) $configuration : null;
     }
 }
