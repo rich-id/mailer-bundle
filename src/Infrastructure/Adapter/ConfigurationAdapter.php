@@ -16,12 +16,12 @@ class ConfigurationAdapter implements ConfigurationInterface
 
     public function isYopmailEnabled(): bool
     {
-        return (bool) $this->parameterBag->get(BundleConfiguration::YOPMAIL_ENABLED);
+        return (bool) $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::YOPMAIL_ENABLED));
     }
 
     public function getSubjectPrefix(): ?string
     {
-        $configuration = $this->parameterBag->get(BundleConfiguration::SUBJECT_PREFIX);
+        $configuration = $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::SUBJECT_PREFIX));
         return ($configuration !== null) ? (string) $configuration : null;
     }
 }
