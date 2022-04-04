@@ -20,6 +20,8 @@ class Configuration extends AbstractConfiguration
     public const SUBJECT_PREFIX = 'subject_prefix';
     public const YOPMAIL_ENABLED = 'yopmail_enabled';
 
+    public const AUTOMATIC_ADD_FOOTER = 'automatic_add_footer';
+
     protected function buildConfig(NodeBuilder $rootNode): void
     {
         $this->senderAddressNode($rootNode);
@@ -28,6 +30,7 @@ class Configuration extends AbstractConfiguration
         $this->returnPathNode($rootNode);
         $this->subjectNode($rootNode);
         $this->yopmailEnabledNode($rootNode);
+        $this->automaticAddFooterNode($rootNode);
     }
 
     protected function senderAddressNode(NodeBuilder $nodeBuilder): void
@@ -69,6 +72,13 @@ class Configuration extends AbstractConfiguration
     {
         $nodeBuilder
             ->booleanNode(self::YOPMAIL_ENABLED)
+            ->defaultFalse();
+    }
+
+    protected function automaticAddFooterNode(NodeBuilder $nodeBuilder): void
+    {
+        $nodeBuilder
+            ->booleanNode(self::AUTOMATIC_ADD_FOOTER)
             ->defaultFalse();
     }
 }

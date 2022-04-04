@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace RichId\MailerBundle\Infrastructure\EventSubscriber;
 
 use RichId\MailerBundle\Domain\Updater\BccEmailUpdater;
+use RichId\MailerBundle\Domain\Updater\FooterEmailUpdater;
 use RichId\MailerBundle\Domain\Updater\ReturnPathEmailUpdater;
 use RichId\MailerBundle\Domain\Updater\SenderEmailUpdater;
 use RichId\MailerBundle\Domain\Updater\SubjectPrefixEmailUpdater;
@@ -18,6 +19,9 @@ class MessageEventSubscriber implements EventSubscriberInterface
 {
     #[Required]
     public BccEmailUpdater $bccEmailUpdater;
+
+    #[Required]
+    public FooterEmailUpdater $footerEmailUpdater;
 
     #[Required]
     public ReturnPathEmailUpdater $returnPathEmailUpdater;
@@ -40,6 +44,7 @@ class MessageEventSubscriber implements EventSubscriberInterface
         }
 
         ($this->bccEmailUpdater)($message);
+        ($this->footerEmailUpdater)($message);
         ($this->returnPathEmailUpdater)($message);
         ($this->senderEmailUpdater)($message);
         ($this->subjectPrefixEmailUpdater)($message);

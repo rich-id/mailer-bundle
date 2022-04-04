@@ -11,6 +11,7 @@
 
         <prototype namespace="RichId\MailerBundle\Domain\"
                    resource="../../../Domain"
+                   exclude="../../../Domain/EmailFooter/DefaultEmailFooter.php"
         />
 
         <!-- Infrastructure -->

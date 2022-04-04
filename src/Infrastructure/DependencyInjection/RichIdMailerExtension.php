@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace RichId\MailerBundle\Infrastructure\DependencyInjection;
 
 use RichCongress\BundleToolbox\Configuration\AbstractExtension;
+use RichId\MailerBundle\Domain\EmailFooter\EmailFooterInterface;
+use RichId\MailerBundle\Infrastructure\DependencyInjection\CompilerPass\EmailFooterCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -28,5 +30,7 @@ class RichIdMailerExtension extends AbstractExtension implements PrependExtensio
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
+
+        $container->registerForAutoconfiguration(EmailFooterInterface::class)->addTag(EmailFooterCompilerPass::TAG);
     }
 }
