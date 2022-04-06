@@ -23,13 +23,13 @@ final class DefaultEmailFooter implements EmailFooterInterface
         $footers = $this->emailFooterRepository->getEmailFooters();
 
         foreach ($footers as $footer) {
-            $content .= $this->generteFooter($footer);
+            $content .= $this->generateFooter($footer);
         }
 
         return $content;
     }
 
-    private function generteFooter(EmailFooter $emailFooter): string
+    private function generateFooter(EmailFooter $emailFooter): string
     {
         return \sprintf('<br />%s<br />', $this->translator->trans($emailFooter->getValueToUse()));
     }
