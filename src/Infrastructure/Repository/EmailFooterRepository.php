@@ -15,7 +15,7 @@ use RichId\MailerBundle\Domain\Entity\EmailFooter;
  */
 class EmailFooterRepository extends ServiceEntityRepository
 {
-    /** @codeCoverageIgnore  */
+    /** @codeCoverageIgnore */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, EmailFooter::class);

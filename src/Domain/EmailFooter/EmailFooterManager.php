@@ -24,6 +24,10 @@ final class EmailFooterManager
         $footerContent = '';
 
         foreach ($this->footers as $footer) {
+            if ($footer instanceof DefaultEmailFooter && !$this->configuration->automaticAddFooter()) {
+                continue;
+            }
+
             $footerContent .= $footer->getFooter();
         }
 

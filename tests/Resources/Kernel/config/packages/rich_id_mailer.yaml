@@ -1,4 +1,4 @@
 rich_id_mailer:
-    sender_address: test@test.test
+    sender_address: sender@test.test
     sender_name: Test
-    automatic_add_footer: false
+    automatic_add_footer: true

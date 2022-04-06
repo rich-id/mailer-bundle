@@ -9,3 +9,4 @@ framework:
         storage_id: session.storage.mock_file
         save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
 
+

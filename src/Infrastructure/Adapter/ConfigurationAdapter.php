@@ -14,6 +14,11 @@ class ConfigurationAdapter implements ConfigurationInterface
     #[Required]
     public ParameterBagInterface $parameterBag;
 
+    public function automaticAddFooter(): bool
+    {
+        return (bool) $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::AUTOMATIC_ADD_FOOTER));
+    }
+
     public function getSenderAddress(): string
     {
         return (string) $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::SENDER_ADDRESS));

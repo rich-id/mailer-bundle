@@ -6,6 +6,8 @@ namespace RichId\MailerBundle\Domain\Port;
 
 interface ConfigurationInterface
 {
+    public function automaticAddFooter(): bool;
+
     public function getSenderAddress(): string;
     public function getSenderName(): string;
 

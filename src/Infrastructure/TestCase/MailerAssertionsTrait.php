@@ -19,43 +19,58 @@ trait MailerAssertionsTrait
         static::assertSame(\rtrim($expected), \rtrim((string) $email->getHtmlBody()));
     }
 
+    public static function assertEmailSubject(?string $expected, Email $email): void
+    {
+        static::assertSame($expected, $email->getSubject());
+    }
+
+    /** @param string|string[] $expected */
     public static function assertEmailTo(string|array $expected, Email $email): void
     {
         static::assertEquals((array) $expected, self::extractAddresses($email->getTo()));
     }
 
+    /** @param string|string[] $expected */
     public static function assertEmailCc(string|array $expected, Email $email): void
     {
         static::assertEquals((array) $expected, self::extractAddresses($email->getCc()));
     }
 
+    /** @param string|string[] $expected */
     public static function assertEmailBcc(string|array $expected, Email $email): void
     {
         static::assertEquals((array) $expected, self::extractAddresses($email->getBcc()));
     }
 
+    /** @param string|string[] $expected */
     public static function assertEmailFrom(string|array $expected, Email $email): void
     {
         static::assertEquals((array) $expected, self::extractAddresses($email->getFrom()));
     }
 
+    /** @phpstan-ignore-next-line */
     public function getMailerMessages(string $transport = null): array
     {
         return $this->getMessageMailerEvents()->getMessages($transport);
     }
 
-    public function assertEmailCount(int $count, string $transport = null): void
+    public function assertEmailCount(int $count, string $transport = null, bool $isQueued = true): void
     {
         $queueEmails = \array_filter(
             $this->getMessageMailerEvents()->getEvents($transport),
-            static function (MessageEvent $event) {
-                return $event->isQueued();
+            static function (MessageEvent $event) use ($isQueued) {
+                return $event->isQueued() === $isQueued;
             }
         );
 
         self::assertSame($count, \count($queueEmails));
     }
 
+    /**
+     * @param Address[] $addresses
+     *
+     * @return string[]
+     */
     private static function extractAddresses(array $addresses): array
     {
         return \array_map(

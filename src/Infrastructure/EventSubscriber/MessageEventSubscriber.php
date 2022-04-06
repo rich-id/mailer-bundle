@@ -51,6 +51,7 @@ class MessageEventSubscriber implements EventSubscriberInterface
         ($this->yopmailEmailUpdater)($message);
     }
 
+    /** @codeCoverageIgnore */
     public static function getSubscribedEvents()
     {
         return [

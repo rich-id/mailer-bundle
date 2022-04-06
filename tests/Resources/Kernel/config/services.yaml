@@ -4,8 +4,9 @@ services:
         autowire: true
         public: true
 
-    RichId\EmailCustomizationBundle\Domain\UseCase\GetEmailFooter: ~
+    Symfony\Component\Mailer\Mailer: ~
+    Symfony\Component\Mailer\MailerInterface:
+        alias: Symfony\Component\Mailer\Mailer
 
-    RichId\EmailCustomizationBundle\Tests\Resources\Fixtures\EmailConfigurationFixtures: ~
-    RichId\EmailCustomizationBundle\Tests\Resources\Fixtures\DummyUserFixtures: ~
-    RichId\EmailCustomizationBundle\Tests\Resources\Stubs\GetEmailFooterStub: ~
+    RichId\MailerBundle\Tests\Resources\Fixtures\EmailFooterFixtures: ~
+    RichId\MailerBundle\Tests\Resources\Stub\ParameterBagStub: ~
