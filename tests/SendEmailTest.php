@@ -58,7 +58,7 @@ final class SendEmailTest extends TestCase
         $this->mailer->send($email);
 
         $this->assertEmailCount(1, null, false);
-        $email = $this->getMailerMessages()[0];
+        $email = $this->getMailerMessages(null, false)[0];
 
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
@@ -84,7 +84,7 @@ final class SendEmailTest extends TestCase
         $this->mailer->send($email);
 
         $this->assertEmailCount(1, null, false);
-        $email = $this->getMailerMessages()[0];
+        $email = $this->getMailerMessages(null, false)[0];
 
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
@@ -110,7 +110,7 @@ final class SendEmailTest extends TestCase
         $this->mailer->send($email);
 
         $this->assertEmailCount(1, null, false);
-        $email = $this->getMailerMessages()[0];
+        $email = $this->getMailerMessages(null, false)[0];
 
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
@@ -137,7 +137,7 @@ final class SendEmailTest extends TestCase
         $this->mailer->send($email);
 
         $this->assertEmailCount(1, null, false);
-        $email = $this->getMailerMessages()[0];
+        $email = $this->getMailerMessages(null, false)[0];
 
         self::assertEmailTo('test_test_test@yopmail.com', $email);
         self::assertEmailFrom('sender@test.test', $email);
@@ -164,7 +164,7 @@ final class SendEmailTest extends TestCase
         $this->mailer->send($email);
 
         $this->assertEmailCount(1, null, false);
-        $email = $this->getMailerMessages()[0];
+        $email = $this->getMailerMessages(null, false)[0];
 
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
@@ -185,7 +185,7 @@ final class SendEmailTest extends TestCase
         $this->mailer->send($email);
 
         $this->assertEmailCount(1, null, false);
-        $email = $this->getMailerMessages()[0];
+        $email = $this->getMailerMessages(null, false)[0];
 
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
