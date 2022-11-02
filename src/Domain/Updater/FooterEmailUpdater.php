@@ -22,9 +22,7 @@ final class FooterEmailUpdater
             return;
         }
 
-        $foundedFooter = \substr((string) $htmlBody, -\strlen($footer));
-
-        if ($foundedFooter !== false && $foundedFooter === $footer) {
+        if (mb_strpos((string) $htmlBody, $footer) !== false) {
             return;
         }
 
