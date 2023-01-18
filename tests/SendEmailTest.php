@@ -18,11 +18,12 @@ use Symfony\Component\Mime\Message;
  * @covers \RichId\MailerBundle\Domain\EmailFooter\EmailFooterManager
  * @covers \RichId\MailerBundle\Domain\Entity\EmailFooter
  * @covers \RichId\MailerBundle\Domain\Updater\BccEmailUpdater
+ * @covers \RichId\MailerBundle\Domain\Updater\BccTransformerEmailUpdater
  * @covers \RichId\MailerBundle\Domain\Updater\FooterEmailUpdater
  * @covers \RichId\MailerBundle\Domain\Updater\ReturnPathEmailUpdater
  * @covers \RichId\MailerBundle\Domain\Updater\SenderEmailUpdater
  * @covers \RichId\MailerBundle\Domain\Updater\SubjectPrefixEmailUpdater
- * @covers \RichId\MailerBundle\Domain\Updater\YopmailEmailUpdater
+ * @covers \RichId\MailerBundle\Domain\Updater\YopmailTransformerEmailUpdater
  *
  * @covers \RichId\MailerBundle\Infrastructure\Adapter\ConfigurationAdapter
  * @covers \RichId\MailerBundle\Infrastructure\Adapter\EmailFooterRepositoryAdapter
