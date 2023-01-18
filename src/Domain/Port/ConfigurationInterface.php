@@ -14,6 +14,6 @@ interface ConfigurationInterface
     public function getBccAddress(): ?string;
     public function getReturnPathName(): ?string;
 
-    public function isYopmailEnabled(): bool;
+    public function getTransformationType(): ?string;
     public function getSubjectPrefix(): ?string;
 }

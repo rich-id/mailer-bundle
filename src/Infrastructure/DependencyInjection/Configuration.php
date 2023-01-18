@@ -10,6 +10,8 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 class Configuration extends AbstractConfiguration
 {
     public const CONFIG_NODE = 'rich_id_mailer';
+    public const TRANSFORMATION_TYPE_YOPMAIL = 'yopmail';
+    public const TRANSFORMATION_TYPE_BCC = 'bcc';
 
     public const SENDER_ADDRESS = 'sender_address';
     public const SENDER_NAME = 'sender_name';
@@ -18,7 +20,7 @@ class Configuration extends AbstractConfiguration
     public const RETURN_PATH_ADDRESS = 'return_path_address';
 
     public const SUBJECT_PREFIX = 'subject_prefix';
-    public const YOPMAIL_ENABLED = 'yopmail_enabled';
+    public const TRANSFORMATION_TYPE = 'transformation_type';
 
     public const AUTOMATIC_ADD_FOOTER = 'automatic_add_footer';
 
@@ -29,7 +31,7 @@ class Configuration extends AbstractConfiguration
         $this->bccAddressNode($rootNode);
         $this->returnPathNode($rootNode);
         $this->subjectNode($rootNode);
-        $this->yopmailEnabledNode($rootNode);
+        $this->transformationTypeNode($rootNode);
         $this->automaticAddFooterNode($rootNode);
     }
 
@@ -68,11 +70,12 @@ class Configuration extends AbstractConfiguration
             ->defaultNull();
     }
 
-    protected function yopmailEnabledNode(NodeBuilder $nodeBuilder): void
+    protected function transformationTypeNode(NodeBuilder $nodeBuilder): void
     {
         $nodeBuilder
-            ->booleanNode(self::YOPMAIL_ENABLED)
-            ->defaultFalse();
+            ->enumNode(self::TRANSFORMATION_TYPE)
+            ->values([self::TRANSFORMATION_TYPE_YOPMAIL, self::TRANSFORMATION_TYPE_BCC])
+            ->defaultNull();
     }
 
     protected function automaticAddFooterNode(NodeBuilder $nodeBuilder): void

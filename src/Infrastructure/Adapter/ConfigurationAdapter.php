@@ -41,9 +41,10 @@ class ConfigurationAdapter implements ConfigurationInterface
         return $configuration !== null ? (string) $configuration : null;
     }
 
-    public function isYopmailEnabled(): bool
+    public function getTransformationType(): ?string
     {
-        return (bool) $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::YOPMAIL_ENABLED));
+        $configuration = $this->parameterBag->get(BundleConfiguration::getKey(BundleConfiguration::TRANSFORMATION_TYPE));
+        return $configuration !== null ? (string) $configuration : null;
     }
 
     public function getSubjectPrefix(): ?string

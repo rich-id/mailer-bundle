@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace RichId\MailerBundle\Domain\Updater;
 
 use RichId\MailerBundle\Domain\Port\ConfigurationInterface;
+use RichId\MailerBundle\Infrastructure\DependencyInjection\Configuration;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Service\Attribute\Required;
 
-final class YopmailEmailUpdater
+final class YopmailTransformerEmailUpdater
 {
     public const EXTENSION_YOPMAIL = '@yopmail.com';
 
@@ -18,7 +19,7 @@ final class YopmailEmailUpdater
 
     public function __invoke(Email $email): void
     {
-        if (!$this->configuration->isYopmailEnabled()) {
+        if ($this->configuration->getTransformationType() !== Configuration::TRANSFORMATION_TYPE_YOPMAIL) {
             return;
         }
 

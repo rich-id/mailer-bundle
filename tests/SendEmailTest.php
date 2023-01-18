@@ -122,11 +122,11 @@ final class SendEmailTest extends TestCase
         self::assertEmpty($email->getAttachments());
     }
 
-    public function testSendEmailWithYopmailEnabled(): void
+    public function testSendEmailWithYopmailTransformer(): void
     {
         $this->parameterBagStub->customParameters = [
             'rich_id_mailer.automatic_add_footer' => false,
-            'rich_id_mailer.yopmail_enabled'      => true,
+            'rich_id_mailer.transformation_type'  => 'yopmail',
         ];
 
         $email = new Email();
@@ -144,6 +144,38 @@ final class SendEmailTest extends TestCase
         self::assertEmailBody('test', $email);
         self::assertEmailSubject(null, $email);
         self::assertEmailBcc('bcc@test.test', $email);
+        self::assertNull($email->getReturnPath());
+        self::assertEmpty($email->getCc());
+        self::assertEmpty($email->getAttachments());
+    }
+
+    public function testSendEmailWithBccTransformer(): void
+    {
+        $this->parameterBagStub->customParameters = [
+            'rich_id_mailer.automatic_add_footer' => false,
+            'rich_id_mailer.transformation_type'  => 'bcc',
+            'rich_id_mailer.bcc_address'          => 'bcc@bcc.bcc',
+        ];
+
+        $email = new Email();
+        $email->to('test@test.test');
+        $email->cc('cc@test.test');
+        $email->bcc('bcc@test.test');
+        $email->html('test');
+
+        $this->mailer->send($email);
+
+        $this->assertEmailCount(1, null, false);
+        $email = $this->getMailerMessages(null, false)[0];
+
+        self::assertEmailTo('bcc@bcc.bcc', $email);
+        self::assertEmailFrom('sender@test.test', $email);
+        self::assertStringContainsString('Destinataire (To): test@test.test', $email->getHtmlBody());
+        self::assertStringContainsString('Copie (Cc): cc@test.test', $email->getHtmlBody());
+        self::assertStringContainsString('Copie cachée (Cci): bcc@test.test', $email->getHtmlBody());
+        self::assertEmailSubject(null, $email);
+        self::assertEmailBcc([], $email);
+        self::assertEmailCc([], $email);
         self::assertNull($email->getReturnPath());
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getAttachments());

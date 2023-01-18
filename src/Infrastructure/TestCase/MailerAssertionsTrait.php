@@ -49,7 +49,7 @@ trait MailerAssertionsTrait
     }
 
     /** @phpstan-ignore-next-line */
-    public function getMailerMessages(string $transport = null, bool $isQueued = true): array
+    public function getMailerMessages(?string $transport = null, bool $isQueued = true): array
     {
         return \array_values(
             \array_map(
@@ -66,7 +66,7 @@ trait MailerAssertionsTrait
         );
     }
 
-    public function assertEmailCount(int $count, string $transport = null, bool $isQueued = true): void
+    public function assertEmailCount(int $count, ?string $transport = null, bool $isQueued = true): void
     {
         $queueEmails = \array_filter(
             $this->getMessageMailerEvents()->getEvents($transport),

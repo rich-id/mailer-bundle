@@ -1,0 +1,3 @@
+mailer_bundle.transformation.bcc: 'Copie cachée (Cci):'
+mailer_bundle.transformation.cc: 'Copie (Cc):'
+mailer_bundle.transformation.to: 'Destinataire (To):'

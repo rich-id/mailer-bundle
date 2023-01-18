@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace RichId\MailerBundle\Infrastructure\EventSubscriber;
 
 use RichId\MailerBundle\Domain\Updater\BccEmailUpdater;
+use RichId\MailerBundle\Domain\Updater\BccTransformerEmailUpdater;
 use RichId\MailerBundle\Domain\Updater\FooterEmailUpdater;
 use RichId\MailerBundle\Domain\Updater\ReturnPathEmailUpdater;
 use RichId\MailerBundle\Domain\Updater\SenderEmailUpdater;
 use RichId\MailerBundle\Domain\Updater\SubjectPrefixEmailUpdater;
-use RichId\MailerBundle\Domain\Updater\YopmailEmailUpdater;
+use RichId\MailerBundle\Domain\Updater\YopmailTransformerEmailUpdater;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Event\MessageEvent;
 use Symfony\Component\Mime\Email;
@@ -17,6 +18,8 @@ use Symfony\Contracts\Service\Attribute\Required;
 
 class MessageEventSubscriber implements EventSubscriberInterface
 {
+    public const ALREADY_UPDATE_HEADER_KEY = 'mailer-bundle-update';
+
     #[Required]
     public BccEmailUpdater $bccEmailUpdater;
 
@@ -33,7 +36,10 @@ class MessageEventSubscriber implements EventSubscriberInterface
     public SubjectPrefixEmailUpdater $subjectPrefixEmailUpdater;
 
     #[Required]
-    public YopmailEmailUpdater $yopmailEmailUpdater;
+    public YopmailTransformerEmailUpdater $yopmailTransformerEmailUpdater;
+
+    #[Required]
+    public BccTransformerEmailUpdater $bccTransformerEmailUpdater;
 
     public function onMessage(MessageEvent $event): void
     {
@@ -43,12 +49,19 @@ class MessageEventSubscriber implements EventSubscriberInterface
             return;
         }
 
+        if ($message->getHeaders()->has(self::ALREADY_UPDATE_HEADER_KEY)) {
+            return;
+        }
+
+        $message->getHeaders()->addTextHeader(self::ALREADY_UPDATE_HEADER_KEY, 'true');
+
         ($this->bccEmailUpdater)($message);
         ($this->footerEmailUpdater)($message);
         ($this->returnPathEmailUpdater)($message);
         ($this->senderEmailUpdater)($message);
         ($this->subjectPrefixEmailUpdater)($message);
-        ($this->yopmailEmailUpdater)($message);
+        ($this->yopmailTransformerEmailUpdater)($message);
+        ($this->bccTransformerEmailUpdater)($message);
     }
 
     /** @codeCoverageIgnore */
