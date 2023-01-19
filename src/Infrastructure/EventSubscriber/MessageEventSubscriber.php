@@ -43,15 +43,20 @@ class MessageEventSubscriber implements EventSubscriberInterface
     {
         $message = $event->getMessage();
 
-        if (!$message instanceof Email || $event->isQueued()) {
+        if (!$message instanceof Email) {
             return;
         }
 
+        ($this->senderEmailUpdater)($message);
+        ($this->returnPathEmailUpdater)($message);
         ($this->bccEmailUpdater)($message);
         ($this->footerEmailUpdater)($message);
-        ($this->returnPathEmailUpdater)($message);
-        ($this->senderEmailUpdater)($message);
         ($this->subjectPrefixEmailUpdater)($message);
+
+        if ($event->isQueued()) {
+            return;
+        }
+
         ($this->yopmailTransformerEmailUpdater)($message);
         ($this->bccTransformerEmailUpdater)($message);
     }

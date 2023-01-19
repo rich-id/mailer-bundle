@@ -1,9 +1,15 @@
 <div style="background: #eeeeee; padding: 15px">
-    <div>{{ 'mailer_bundle.transformation.to'|trans({}, 'messages') }} {{ toList|join(' / ') }}</div><br/>
+    <div>{{ 'mailer_bundle.transformation.to'|trans({}, 'messages') }} {{ toList|join(' / ') }}</div>
 
-    <div>{{ 'mailer_bundle.transformation.cc'|trans({}, 'messages') }} {{ ccList|join(' / ') }}</div><br/>
+    {% if ccList is not empty %}
+        <br/>
+        <div>{{ 'mailer_bundle.transformation.cc'|trans({}, 'messages') }} {{ ccList|join(' / ') }}</div>
+    {% endif %}
 
-    <div>{{ 'mailer_bundle.transformation.bcc'|trans({}, 'messages') }} {{ bccList|join(' / ') }}</div>
+    {% if bccList is not empty %}
+        <br/>
+        <div>{{ 'mailer_bundle.transformation.bcc'|trans({}, 'messages') }} {{ bccList|join(' / ') }}</div>
+    {% endif %}
 </div>
 <br/>
 <br/>
