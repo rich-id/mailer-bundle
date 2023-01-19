@@ -18,8 +18,6 @@ use Symfony\Contracts\Service\Attribute\Required;
 
 class MessageEventSubscriber implements EventSubscriberInterface
 {
-    public const ALREADY_UPDATE_HEADER_KEY = 'mailer-bundle-update';
-
     #[Required]
     public BccEmailUpdater $bccEmailUpdater;
 
@@ -45,15 +43,9 @@ class MessageEventSubscriber implements EventSubscriberInterface
     {
         $message = $event->getMessage();
 
-        if (!$message instanceof Email) {
+        if (!$message instanceof Email || $event->isQueued()) {
             return;
         }
-
-        if ($message->getHeaders()->has(self::ALREADY_UPDATE_HEADER_KEY)) {
-            return;
-        }
-
-        $message->getHeaders()->addTextHeader(self::ALREADY_UPDATE_HEADER_KEY, 'true');
 
         ($this->bccEmailUpdater)($message);
         ($this->footerEmailUpdater)($message);
