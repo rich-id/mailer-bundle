@@ -6,10 +6,11 @@ namespace RichId\MailerBundle\Tests;
 
 use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
+use RichId\MailerBundle\Domain\Email;
 use RichId\MailerBundle\Infrastructure\TestCase\MailerAssertionsTrait;
 use RichId\MailerBundle\Tests\Resources\Stub\ParameterBagStub;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Email as SymfonyEmail;
 use Symfony\Component\Mime\Exception\LogicException;
 use Symfony\Component\Mime\Message;
 
@@ -52,7 +53,7 @@ final class SendEmailTest extends TestCase
             'rich_id_mailer.automatic_add_footer' => false,
         ];
 
-        $email = new Email();
+        $email = new SymfonyEmail();
         $email->to('test@test.test');
         $email->html('test');
 
@@ -78,7 +79,7 @@ final class SendEmailTest extends TestCase
             'rich_id_mailer.return_path_address'  => 'bounces@test.test',
         ];
 
-        $email = new Email();
+        $email = new SymfonyEmail();
         $email->to('test@test.test');
         $email->html('test');
 
@@ -104,7 +105,7 @@ final class SendEmailTest extends TestCase
             'rich_id_mailer.bcc_address'          => 'bcc@test.test',
         ];
 
-        $email = new Email();
+        $email = new SymfonyEmail();
         $email->to('test@test.test');
         $email->html('test');
 
@@ -130,7 +131,7 @@ final class SendEmailTest extends TestCase
             'rich_id_mailer.transformation_type'  => 'yopmail',
         ];
 
-        $email = new Email();
+        $email = new SymfonyEmail();
         $email->to('test@test.test');
         $email->bcc('bcc@test.test');
         $email->html('test');
@@ -158,7 +159,7 @@ final class SendEmailTest extends TestCase
             'rich_id_mailer.bcc_address'          => 'bcc@bcc.bcc',
         ];
 
-        $email = new Email();
+        $email = new SymfonyEmail();
         $email->to('test@test.test');
         $email->cc('cc@test.test');
         $email->bcc('bcc@test.test');
@@ -189,7 +190,7 @@ final class SendEmailTest extends TestCase
             'rich_id_mailer.subject_prefix'       => 'My prefix -',
         ];
 
-        $email = new Email();
+        $email = new SymfonyEmail();
         $email->to('test@test.test');
         $email->subject('My subject');
         $email->html('test');
@@ -211,7 +212,7 @@ final class SendEmailTest extends TestCase
 
     public function testSendEmailWithFooter(): void
     {
-        $email = new Email();
+        $email = new SymfonyEmail();
         $email->to('test@test.test');
         $email->html('test');
 
@@ -223,6 +224,28 @@ final class SendEmailTest extends TestCase
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
         self::assertEmailBody('test<br />First footer line,<br /><br />Second footer line,<br />', $email);
+        self::assertEmailSubject(null, $email);
+        self::assertNull($email->getReturnPath());
+        self::assertEmpty($email->getCc());
+        self::assertEmpty($email->getBcc());
+        self::assertEmpty($email->getAttachments());
+    }
+
+    public function testSendEmailWithFooterButDisabled(): void
+    {
+        $email = new Email();
+        $email->to('test@test.test');
+        $email->html('test');
+        $email->setIsFooterDisabled(true);
+
+        $this->mailer->send($email);
+
+        $this->assertEmailCount(1, null, false);
+        $email = $this->getMailerMessages(null, false)[0];
+
+        self::assertEmailTo('test@test.test', $email);
+        self::assertEmailFrom('sender@test.test', $email);
+        self::assertEmailBody('test', $email);
         self::assertEmailSubject(null, $email);
         self::assertNull($email->getReturnPath());
         self::assertEmpty($email->getCc());
