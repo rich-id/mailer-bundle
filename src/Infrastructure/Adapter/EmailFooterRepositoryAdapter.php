@@ -21,6 +21,6 @@ class EmailFooterRepositoryAdapter implements EmailFooterRepositoryInterface
 
     public function findOneBySlug(string $slug): EmailFooter
     {
-        return $this->emailFooterRepository->findOneBySlug($slug, ['position' => 'ASC']);
+        return $this->emailFooterRepository->findOneBySlug($slug);
     }
 }
