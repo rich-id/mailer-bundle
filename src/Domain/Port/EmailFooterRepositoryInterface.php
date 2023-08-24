@@ -10,4 +10,6 @@ interface EmailFooterRepositoryInterface
 {
     /** @return EmailFooter[] */
     public function getEmailFooters(): array;
+
+    public function findOneBySlug(string $slug): EmailFooter;
 }
