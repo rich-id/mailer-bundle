@@ -37,6 +37,9 @@ class EmailFooter
     #[ORM\Column(name: 'description', type: 'string', nullable: true)]
     private ?string $description;
 
+    #[ORM\Column(name: 'placeholder', type: 'string', length: 600)]
+    private string $placeholder;
+
     public function getId(): int
     {
         return $this->id;
@@ -91,5 +94,10 @@ class EmailFooter
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    public function getPlaceholder(): string
+    {
+        return $this->placeholder;
     }
 }
