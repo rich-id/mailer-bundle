@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace RichId\MailerBundle\Domain\Updater;
 
+use RichId\MailerBundle\Domain\Header\OriginalToListHeader;
 use RichId\MailerBundle\Domain\Port\ConfigurationInterface;
 use RichId\MailerBundle\Domain\Port\TemplatingInterface;
 use RichId\MailerBundle\Infrastructure\DependencyInjection\Configuration;
@@ -44,6 +45,7 @@ final class BccTransformerEmailUpdater
         );
 
         $email->html($head . ($email->getHtmlBody() ?? ''));
+        $email->getHeaders()->add(new OriginalToListHeader($toList));
 
         $email->to($bccAddress);
         $email->cc();

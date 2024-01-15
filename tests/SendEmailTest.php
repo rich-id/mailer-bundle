@@ -7,6 +7,7 @@ namespace RichId\MailerBundle\Tests;
 use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\MailerBundle\Domain\Email;
+use RichId\MailerBundle\Domain\Header\OriginalToListHeader;
 use RichId\MailerBundle\Infrastructure\TestCase\MailerAssertionsTrait;
 use RichId\MailerBundle\Tests\Resources\Stub\ParameterBagStub;
 use Symfony\Component\Mailer\MailerInterface;
@@ -70,6 +71,7 @@ final class SendEmailTest extends TestCase
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getBcc());
         self::assertEmpty($email->getAttachments());
+        self::assertNull($email->getHeaders()->get(OriginalToListHeader::NAME));
     }
 
     public function testSendEmailWithReturnPath(): void
@@ -96,6 +98,7 @@ final class SendEmailTest extends TestCase
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getBcc());
         self::assertEmpty($email->getAttachments());
+        self::assertNull($email->getHeaders()->get(OriginalToListHeader::NAME));
     }
 
     public function testSendEmailWithBcc(): void
@@ -122,6 +125,7 @@ final class SendEmailTest extends TestCase
         self::assertNull($email->getReturnPath());
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getAttachments());
+        self::assertNull($email->getHeaders()->get(OriginalToListHeader::NAME));
     }
 
     public function testSendEmailWithYopmailTransformer(): void
@@ -149,6 +153,7 @@ final class SendEmailTest extends TestCase
         self::assertNull($email->getReturnPath());
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getAttachments());
+        self::assertNull($email->getHeaders()->get(OriginalToListHeader::NAME));
     }
 
     public function testSendEmailWithBccTransformer(): void
@@ -181,6 +186,10 @@ final class SendEmailTest extends TestCase
         self::assertNull($email->getReturnPath());
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getAttachments());
+
+        $originalToListHeader = $email->getHeaders()->get(OriginalToListHeader::NAME);
+        self::assertInstanceOf(OriginalToListHeader::class, $originalToListHeader);
+        self::assertSame(['test@test.test'], $originalToListHeader->getToList());
     }
 
     public function testSendEmailWithSubjectPrefix(): void
@@ -208,6 +217,7 @@ final class SendEmailTest extends TestCase
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getBcc());
         self::assertEmpty($email->getAttachments());
+        self::assertNull($email->getHeaders()->get(OriginalToListHeader::NAME));
     }
 
     public function testSendEmailWithFooter(): void
@@ -229,6 +239,7 @@ final class SendEmailTest extends TestCase
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getBcc());
         self::assertEmpty($email->getAttachments());
+        self::assertNull($email->getHeaders()->get(OriginalToListHeader::NAME));
     }
 
     public function testSendEmailWithFooterButDisabled(): void
@@ -251,5 +262,6 @@ final class SendEmailTest extends TestCase
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getBcc());
         self::assertEmpty($email->getAttachments());
+        self::assertNull($email->getHeaders()->get(OriginalToListHeader::NAME));
     }
 }
