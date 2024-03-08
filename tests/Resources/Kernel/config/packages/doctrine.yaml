@@ -2,6 +2,6 @@ doctrine:
     orm:
         entity_managers:
             default:
-                naming_strategy: doctrine.orm.naming_strategy.underscore
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
                 connection: default
                 auto_mapping: true

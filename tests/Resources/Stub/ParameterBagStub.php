@@ -18,22 +18,22 @@ final class ParameterBagStub extends AbstractOverrideService implements Paramete
     /** @var array<string, string|bool> */
     public array $customParameters = [];
 
-    public function clear()
+    public function clear(): void
     {
-        return $this->innerService->clear();
+        $this->innerService->clear();
     }
 
-    public function add(array $parameters)
+    public function add(array $parameters): void
     {
-        return $this->innerService->add($parameters);
+        $this->innerService->add($parameters);
     }
 
-    public function all()
+    public function all(): array
     {
         return $this->innerService->all();
     }
 
-    public function get(string $name)
+    public function get(string $name): array|bool|string|int|float|\UnitEnum|null
     {
         if (isset($this->customParameters[$name])) {
             return $this->customParameters[$name];
@@ -42,37 +42,37 @@ final class ParameterBagStub extends AbstractOverrideService implements Paramete
         return $this->innerService->get($name);
     }
 
-    public function remove(string $name)
+    public function remove(string $name): void
     {
-        return $this->innerService->remove($name);
+        $this->innerService->remove($name);
     }
 
-    public function set(string $name, $value)
+    public function set(string $name, array|bool|string|int|float|\UnitEnum|null $value): void
     {
-        return $this->innerService->set($name, $value);
+        $this->innerService->set($name, $value);
     }
 
-    public function has(string $name)
+    public function has(string $name): bool
     {
         return $this->innerService->has($name);
     }
 
-    public function resolve()
+    public function resolve(): void
     {
-        return $this->innerService->resolve();
+        $this->innerService->resolve();
     }
 
-    public function resolveValue($value)
+    public function resolveValue(mixed $value): mixed
     {
         return $this->innerService->resolveValue($value);
     }
 
-    public function escapeValue($value)
+    public function escapeValue(mixed $value): mixed
     {
         return $this->innerService->escapeValue($value);
     }
 
-    public function unescapeValue($value)
+    public function unescapeValue(mixed $value): mixed
     {
         return $this->innerService->unescapeValue($value);
     }
