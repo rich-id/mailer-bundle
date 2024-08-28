@@ -10,3 +10,4 @@ services:
 
     RichId\MailerBundle\Tests\Resources\Fixtures\EmailFooterFixtures: ~
     RichId\MailerBundle\Tests\Resources\Stub\ParameterBagStub: ~
+    RichId\MailerBundle\Tests\Resources\CustomSubjectPrefix: ~

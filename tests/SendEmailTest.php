@@ -66,7 +66,7 @@ final class SendEmailTest extends TestCase
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
         self::assertEmailBody('test', $email);
-        self::assertEmailSubject(null, $email);
+        self::assertEmailSubject('Custom prefix - ', $email);
         self::assertNull($email->getReturnPath());
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getBcc());
@@ -93,7 +93,7 @@ final class SendEmailTest extends TestCase
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
         self::assertEmailBody('test', $email);
-        self::assertEmailSubject(null, $email);
+        self::assertEmailSubject('Custom prefix - ', $email);
         self::assertSame('bounces@test.test', $email->getReturnPath()->getAddress());
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getBcc());
@@ -120,7 +120,7 @@ final class SendEmailTest extends TestCase
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
         self::assertEmailBody('test', $email);
-        self::assertEmailSubject(null, $email);
+        self::assertEmailSubject('Custom prefix - ', $email);
         self::assertEmailBcc('bcc@test.test', $email);
         self::assertNull($email->getReturnPath());
         self::assertEmpty($email->getCc());
@@ -148,7 +148,7 @@ final class SendEmailTest extends TestCase
         self::assertEmailTo('test_test_test@yopmail.com', $email);
         self::assertEmailFrom('sender@test.test', $email);
         self::assertEmailBody('test', $email);
-        self::assertEmailSubject(null, $email);
+        self::assertEmailSubject('Custom prefix - ', $email);
         self::assertEmailBcc('bcc@test.test', $email);
         self::assertNull($email->getReturnPath());
         self::assertEmpty($email->getCc());
@@ -180,7 +180,7 @@ final class SendEmailTest extends TestCase
         self::assertStringContainsString('Destinataire (To): test@test.test', $email->getHtmlBody());
         self::assertStringContainsString('Copie (Cc): cc@test.test', $email->getHtmlBody());
         self::assertStringContainsString('Copie cachée (Cci): bcc@test.test', $email->getHtmlBody());
-        self::assertEmailSubject(null, $email);
+        self::assertEmailSubject('Custom prefix - ', $email);
         self::assertEmailBcc([], $email);
         self::assertEmailCc([], $email);
         self::assertNull($email->getReturnPath());
@@ -212,7 +212,7 @@ final class SendEmailTest extends TestCase
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
         self::assertEmailBody('test', $email);
-        self::assertEmailSubject('My prefix - My subject', $email);
+        self::assertEmailSubject('My prefix - Custom prefix - My subject', $email);
         self::assertNull($email->getReturnPath());
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getBcc());
@@ -234,7 +234,7 @@ final class SendEmailTest extends TestCase
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
         self::assertEmailBody('test<br />First footer line,<br /><br />Second footer line,<br />', $email);
-        self::assertEmailSubject(null, $email);
+        self::assertEmailSubject('Custom prefix - ', $email);
         self::assertNull($email->getReturnPath());
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getBcc());
@@ -257,7 +257,7 @@ final class SendEmailTest extends TestCase
         self::assertEmailTo('test@test.test', $email);
         self::assertEmailFrom('sender@test.test', $email);
         self::assertEmailBody('test', $email);
-        self::assertEmailSubject(null, $email);
+        self::assertEmailSubject('Custom prefix - ', $email);
         self::assertNull($email->getReturnPath());
         self::assertEmpty($email->getCc());
         self::assertEmpty($email->getBcc());

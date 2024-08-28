@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace RichId\MailerBundle\Domain\EmailFooter;
 
 use RichId\MailerBundle\Domain\Port\ConfigurationInterface;
+use Symfony\Component\Mime\Email as SymfonyEmail;
 use Symfony\Contracts\Service\Attribute\Required;
 
 final class EmailFooterManager
@@ -15,7 +16,7 @@ final class EmailFooterManager
     #[Required]
     public ConfigurationInterface $configuration;
 
-    public function getFooter(): ?string
+    public function getFooter(?SymfonyEmail $email = null): ?string
     {
         if (empty($this->footers)) {
             return null;
@@ -28,7 +29,7 @@ final class EmailFooterManager
                 continue;
             }
 
-            $footerContent .= $footer->getFooter();
+            $footerContent .= $footer->getFooter($email);
         }
 
         return \htmlspecialchars_decode(

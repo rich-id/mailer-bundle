@@ -16,10 +16,12 @@ final class SenderEmailUpdater
 
     public function __invoke(Email $email): void
     {
+        $customSenderName = $email->getHeaders()->get('custom-sender-name')?->getBodyAsString();
+
         $email->from(
             new Address(
                 $this->configuration->getSenderAddress(),
-                $this->configuration->getSenderName()
+                $customSenderName ?? $this->configuration->getSenderName()
             )
         );
     }

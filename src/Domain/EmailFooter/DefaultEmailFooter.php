@@ -7,6 +7,7 @@ namespace RichId\MailerBundle\Domain\EmailFooter;
 use RichId\MailerBundle\Domain\Entity\EmailFooter;
 use RichId\MailerBundle\Domain\Port\EmailFooterRepositoryInterface;
 use RichId\MailerBundle\Domain\Port\TranslatorInterface;
+use Symfony\Component\Mime\Email as SymfonyEmail;
 use Symfony\Contracts\Service\Attribute\Required;
 
 final class DefaultEmailFooter implements EmailFooterInterface
@@ -17,7 +18,7 @@ final class DefaultEmailFooter implements EmailFooterInterface
     #[Required]
     public TranslatorInterface $translator;
 
-    public function getFooter(): string
+    public function getFooter(?SymfonyEmail $email = null): string
     {
         $content = '';
         $footers = $this->emailFooterRepository->getEmailFooters();

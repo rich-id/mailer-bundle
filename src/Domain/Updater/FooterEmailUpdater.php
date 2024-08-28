@@ -16,7 +16,7 @@ final class FooterEmailUpdater
 
     public function __invoke(SymfonyEmail $email): void
     {
-        $footer = $this->emailFooterManager->getFooter();
+        $footer = $this->emailFooterManager->getFooter($email);
         $htmlBody = $email->getHtmlBody();
 
         $forceDisabled = $email instanceof Email && $email->isFooterDisabled();
