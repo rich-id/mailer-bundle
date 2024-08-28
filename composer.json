@@ -3,6 +3,8 @@
     "description": "Mailer bundle",
     "type": "symfony-bundle",
     "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "authors": [
         {
             "name": "RichId",
@@ -16,23 +18,22 @@
         "issues": "https://github.com/rich-id/mailer-bundle/issues"
     },
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "doctrine/migrations": "^3.0",
-        "doctrine/orm": "^2.7",
-        "richcongress/bundle-toolbox": "^1.1",
-        "sensio/framework-extra-bundle": "^5.4|^6.0",
-        "symfony/event-dispatcher": "^5.4|^6.0",
-        "symfony/mailer": "^5.4|^6.0",
-        "symfony/mime": "^5.4|^6.0",
-        "symfony/translation": "^5.4|^6.0",
-        "symfony/twig-bundle": "^5.4|^6.0",
+        "doctrine/orm": "^2.7 || ^3.0",
+        "richcongress/bundle-toolbox": "^2.0",
+        "symfony/event-dispatcher": "^6.0 || ^7.0",
+        "symfony/mailer": "^6.0 || ^7.0",
+        "symfony/mime": "^6.0 || ^7.0",
+        "symfony/translation": "^6.0 || ^7.0",
+        "symfony/twig-bundle": "^6.0 || ^7.0",
         "twig/twig": "^3.0"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "^2.0",
         "phpunit/phpunit": "^9.5",
-        "richcongress/static-analysis": "^0.1",
-        "richcongress/test-suite": "^0.1",
+        "richcongress/static-analysis": "^0.2",
+        "richcongress/test-suite": "^0.2",
         "roave/security-advisories": "dev-latest"
     },
     "autoload": {
@@ -47,7 +48,10 @@
     },
     "config": {
         "discard-changes": true,
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "scripts": {
         "post-install-cmd": [
