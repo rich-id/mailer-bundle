@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace RichId\MailerBundle\Tests;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\MailerBundle\Domain\Email;
 use RichId\MailerBundle\Domain\Header\OriginalToListHeader;
