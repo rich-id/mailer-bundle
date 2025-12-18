@@ -18,7 +18,7 @@ final class OriginalToListHeader extends UnstructuredHeader
     {
         $this->toList = $toList;
 
-        parent::__construct(self::NAME, '');
+        parent::__construct(self::NAME, 'nothing');
     }
 
     /** @return string[] */

@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace RichId\MailerBundle\Domain\Updater;
 
+use RichId\MailerBundle\Domain\Email;
 use RichId\MailerBundle\Domain\Port\ConfigurationInterface;
 use RichId\MailerBundle\Domain\SubjectPrefix\SubjectPrefixManager;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Email as SymfonyEmail;
 use Symfony\Contracts\Service\Attribute\Required;
 
 final class SubjectPrefixEmailUpdater
@@ -17,7 +18,7 @@ final class SubjectPrefixEmailUpdater
     #[Required]
     public SubjectPrefixManager $subjectPrefixManager;
 
-    public function __invoke(Email $email): void
+    public function __invoke(SymfonyEmail $email): void
     {
         $subject = $email->getSubject() ?? '';
 
@@ -31,7 +32,9 @@ final class SubjectPrefixEmailUpdater
             )
         );
 
-        if ($subjectPrefix === '' || \str_starts_with($subject, $subjectPrefix)) {
+        $forceNoPrefix = $email instanceof Email && $email->isSubjectDisabled();
+
+        if ($forceNoPrefix || $subjectPrefix === '' || \str_starts_with($subject, $subjectPrefix)) {
             return;
         }
 
