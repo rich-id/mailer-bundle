@@ -16,7 +16,7 @@ final class SenderEmailUpdater
 
     public function __invoke(Email $email): void
     {
-        $customSenderName = $email->getHeaders()->get('custom-sender-name')?->getBodyAsString();
+        $customSenderName = $email->getHeaders()->get('custom-sender-name')?->getBody();
 
         $email->from(
             new Address(
